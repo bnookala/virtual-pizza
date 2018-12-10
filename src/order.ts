@@ -2,7 +2,7 @@ var pizzapi = require('dominos');
 
 
 export async function orderPizzaForRia () {
-    const  myStore = new pizzapi.Store({
+    const myStore = new pizzapi.Store({
         ID: "7172"
     });
 
@@ -16,7 +16,7 @@ export async function orderPizzaForRia () {
                 Region: "WA",
                 PostalCode: "98109"
             },
-            email: 'mycoolemail@gmail.com,
+            email: 'mycoolemail@gmail.com',
             phone: '4258828080'
         }
     );
