@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as dominos from 'dominos';
+import { orderPizzaForRia } from './order';
 
 const app = express()
 
@@ -39,8 +40,9 @@ app.put('/updatePod', function (req, res) {
     res.send('update pod');
 });
 
-app.post('createPod', function (req, res) {
-    res.send('create pod');
+app.post('/createPod', async function (req, res) {
+    const validatedOrder = await orderPizzaForRia();
+    res.send(validatedOrder);
 });
 
 app.listen(3000, () => { console.log("im aliveeeeee!"); });

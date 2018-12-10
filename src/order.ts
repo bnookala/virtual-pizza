@@ -40,8 +40,7 @@ export async function orderPizzaForRia () {
         )
     );
 
-    const validateResult = await validateOrder(order);
-    console.log(validateResult);
+    return await validateOrder(order);
 }
 
 const validateOrder = async function (order) {
@@ -52,5 +51,3 @@ const validateOrder = async function (order) {
         });
     });
 };
-
-orderPizzaForRia();
