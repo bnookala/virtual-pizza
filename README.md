@@ -4,9 +4,6 @@ order some pizza through kubernetes and virtual kubelet
 ## prior art
 based on https://github.com/stuartleeks/virtual-kubelet-web-mock-nodejs
 
-## deploying
-deploy virtual kubelet using the helm chart to your cluster
-
 ## endpoint analogies
 * /createPod - create and place order
 * /updatePod - not implemented
