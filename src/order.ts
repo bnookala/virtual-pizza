@@ -1,5 +1,4 @@
-var pizzapi = require('dominos');
-
+const pizzapi = require('dominos');
 
 export async function orderPizzaForRia () {
     const myStore = new pizzapi.Store({
@@ -25,11 +24,11 @@ export async function orderPizzaForRia () {
         {
             customer: customer,
             storeID: myStore.ID,
-            deliveryMethod: 'Delivery' //(or 'Carryout')
+            deliveryMethod: 'Delivery' // (or 'Carryout')
         }
     );
 
-    //pepperoni.
+    // pepperoni.
     order.addItem(
         new pizzapi.Item(
             {
@@ -43,7 +42,7 @@ export async function orderPizzaForRia () {
     return await validateOrder(order);
 }
 
-const validateOrder = async function (order) {
+const validateOrder = async (order) => {
     return new Promise((resolve, reject) => {
         order.validate((result) => {
             console.log("validate success?");

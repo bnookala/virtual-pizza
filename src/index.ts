@@ -2,45 +2,45 @@ import * as express from 'express';
 import * as dominos from 'dominos';
 import { orderPizzaForRia } from './order';
 
-const app = express()
+const app = express();
 
-app.get('/capacity', function (req, res) {
-    res.send('capacity')
+app.get('/capacity', (req, res) => {
+    res.send('capacity');
 });
 
-app.get('/nodeAddresses', function (req, res) {
-    res.send('node addresses')
+app.get('/nodeAddresses', (req, res) => {
+    res.send('node addresses');
 });
 
-app.get('/nodeConditions', function (req, res) {
-    res.send('node conditions')
+app.get('/nodeConditions', (req, res) => {
+    res.send('node conditions');
 });
 
-app.get('/getPods', function (req, res) {
-    res.send('get pods')
+app.get('/getPods', (req, res) => {
+    res.send('get pods');
 });
 
-app.get('/getPodStatus', function (req, res) {
+app.get('/getPodStatus', (req, res) => {
     res.send('pod status');
 });
 
-app.get('/getContainerLogs', function (req, res) {
+app.get('/getContainerLogs', (req, res) => {
     res.send('get logs');
 });
 
-app.get('/getPod', function (req, res) {
+app.get('/getPod', (req, res) => {
     res.send('get pod');
 });
 
-app.delete('/deletePod', function (req, res) {
+app.delete('/deletePod', (req, res) => {
     res.send('delete pod');
 });
 
-app.put('/updatePod', function (req, res) {
+app.put('/updatePod', (req, res) => {
     res.send('update pod');
 });
 
-app.post('/createPod', async function (req, res) {
+app.post('/createPod', async (req, res) => {
     const validatedOrder = await orderPizzaForRia();
     res.send(validatedOrder);
 });
