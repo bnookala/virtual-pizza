@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - '10'
+
+os:
+  - linux
+
+sudo: false
+
+install:
+  - npm install
+
+script:
+  - gulp tslint
+
+cache:
+  directories:
+    - node_modules
+
+git:
+  depth: 1
