@@ -12,7 +12,7 @@ install:
   - npm install
 
 script:
-  - gulp tslint
+  - npm run lint
 
 cache:
   directories:

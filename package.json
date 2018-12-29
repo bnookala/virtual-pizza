@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc -w",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "lint": "gulp tslint"
   },
   "repository": {
     "type": "git",
