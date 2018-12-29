@@ -46,8 +46,8 @@ export async function orderPizzaForRia () {
 
 const getAddress = async (store) => {
     return new Promise((resolve, reject) => {
-        store.getStoreInfo((result) => {
-            console.log("got store info");
+        store.getInfo((result) => {
+            result = result['result'];
             resolve({streetName: result['StreetName'], city: result['City'], state: result['Region'], zip: result['PostalCode']});
         });
     });
