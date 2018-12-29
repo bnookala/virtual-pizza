@@ -18,22 +18,22 @@ const customer = new pizzapi.Customer(
 export class Store {
     private storeInfo;
     private storeId;
-    private _storeObject;
+    private storeObject;
 
     constructor(storeId: number) {
         this.storeInfo = {};
         this.storeId = storeId;
-        this._storeObject = new pizzapi.Store({
+        this.storeObject = new pizzapi.Store({
             // 7172 for somewhere in seattle
             ID: this.storeId
         });
 
         this.initProperties();
-    };
+    }
 
     initProperties = async () => {
         this.storeInfo = await this.getStoreInfo();
-    };
+    }
 
     getStoreId = () => {
         return this.storeId;
@@ -41,17 +41,17 @@ export class Store {
 
     getStoreInfo = async () => {
         return new Promise((resolve, reject) => {
-            this._storeObject.getInfo((result) => {
+            this.storeObject.getInfo((result) => {
                 if (result['success']) {
                     resolve(result['result']);
                 }
             });
         });
-    };
+    }
 
     getAddress = () => {
         const storeInfo = this.storeInfo;
-        return { streetName: storeInfo['StreetName'], city: storeInfo['City'], state: storeInfo['Region'], zip: storeInfo['PostalCode'] }
+        return { streetName: storeInfo['StreetName'], city: storeInfo['City'], state: storeInfo['Region'], zip: storeInfo['PostalCode'] };
     }
 
     getHours = () => {
