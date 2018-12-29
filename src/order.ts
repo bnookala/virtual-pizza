@@ -48,10 +48,10 @@ const getAddress = async (store) => {
     return new Promise((resolve, reject) => {
         store.getStoreInfo((result) => {
             console.log("got store info");
-            resolve({'streetName': result['StreetName'], 'city': result['City'], 'state': result['Region'], 'zip': result['PostalCode']});
-        })
+            resolve({streetName: result['StreetName'], city: result['City'], state: result['Region'], zip: result['PostalCode']});
+        });
     });
-}
+};
 
 const validateOrder = async (order) => {
     return new Promise((resolve, reject) => {
