@@ -1,6 +1,6 @@
 const pizzapi = require('dominos');
 
-/* const customer = new pizzapi.Customer(
+const customer = new pizzapi.Customer(
     {
         firstName: 'Ria',
         lastName: 'Bhatia',
@@ -13,9 +13,9 @@ const pizzapi = require('dominos');
         email: 'mycoolemail@gmail.com',
         phone: '4258828080'
     }
-); */
+);
 
-class Store {
+export class Store {
     private storeInfo;
     private storeId;
     private _storeObject;
@@ -35,11 +35,14 @@ class Store {
         this.storeInfo = await this.getStoreInfo();
     };
 
+    getStoreId = () => {
+        return this.storeId;
+    }
+
     getStoreInfo = async () => {
         return new Promise((resolve, reject) => {
             this._storeObject.getInfo((result) => {
                 if (result['success']) {
-                    console.log(result);
                     resolve(result['result']);
                 }
             });
@@ -57,14 +60,11 @@ class Store {
     }
 }
 
-let myStore = new Store(7172);
-debugger;
-
-/* export async function orderPizzaForRia() {
+export async function orderPizzaForRia(storeId) {
     const order = new pizzapi.Order(
         {
             customer: customer,
-            storeID: myStore.ID,
+            storeID: storeId,
             deliveryMethod: 'Delivery' // (or 'Carryout')
         }
     );
@@ -90,4 +90,4 @@ const validateOrder = async (order) => {
             resolve(result);
         });
     });
-}; */
+};

@@ -1,20 +1,19 @@
 import * as express from 'express';
-import * as dominos from 'dominos';
-import { orderPizzaForRia, getStoreAddress, getStoreHours } from './order';
+import { orderPizzaForRia, Store } from './order';
 
 const app = express();
-
+const store = new Store(7172);
 app.get('/capacity', (req, res) => {
     res.send('capacity');
 });
 
 app.get('/nodeAddresses', async (req, res) => {
-    const storeAddress = await getStoreAddress();
+    const storeAddress = store.getAddress();
     res.send(storeAddress);
 });
 
 app.get('/nodeConditions', async (req, res) => {
-    const storeHours = await getStoreHours();
+    const storeHours = store.getHours();
     res.send(storeHours);
 });
 
@@ -43,7 +42,7 @@ app.put('/updatePod', (req, res) => {
 });
 
 app.post('/createPod', async (req, res) => {
-    const validatedOrder = await orderPizzaForRia();
+    const validatedOrder = await orderPizzaForRia(store.getStoreId());
     res.send(validatedOrder);
 });
 
