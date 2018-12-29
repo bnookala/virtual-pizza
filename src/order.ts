@@ -1,7 +1,5 @@
 const pizzapi = require('dominos');
-const myStore = new pizzapi.Store({
-    ID: "7172"
-});
+
 const customer = new pizzapi.Customer(
     {
         firstName: 'Ria',
@@ -17,15 +15,56 @@ const customer = new pizzapi.Customer(
     }
 );
 
-export async function getStoreAddress() {
-    return await getAddress(myStore);
+export class Store {
+    private storeInfo;
+    private storeId;
+    private storeObject;
+
+    constructor(storeId: number) {
+        this.storeInfo = {};
+        this.storeId = storeId;
+        this.storeObject = new pizzapi.Store({
+            // 7172 for somewhere in seattle
+            ID: this.storeId
+        });
+
+        this.initProperties();
+    }
+
+    initProperties = async () => {
+        this.storeInfo = await this.getStoreInfo();
+    }
+
+    getStoreId = () => {
+        return this.storeId;
+    }
+
+    getStoreInfo = async () => {
+        return new Promise((resolve, reject) => {
+            this.storeObject.getInfo((result) => {
+                if (result['success']) {
+                    resolve(result['result']);
+                }
+            });
+        });
+    }
+
+    getAddress = () => {
+        const storeInfo = this.storeInfo;
+        return { streetName: storeInfo['StreetName'], city: storeInfo['City'], state: storeInfo['Region'], zip: storeInfo['PostalCode'] };
+    }
+
+    getHours = () => {
+        const storeInfo = this.storeInfo;
+        return { hours: storeInfo['HoursDescription'] };
+    }
 }
 
-export async function orderPizzaForRia () {
+export async function orderPizzaForRia(storeId) {
     const order = new pizzapi.Order(
         {
             customer: customer,
-            storeID: myStore.ID,
+            storeID: storeId,
             deliveryMethod: 'Delivery' // (or 'Carryout')
         }
     );
@@ -43,15 +82,6 @@ export async function orderPizzaForRia () {
 
     return await validateOrder(order);
 }
-
-const getAddress = async (store) => {
-    return new Promise((resolve, reject) => {
-        store.getInfo((result) => {
-            result = result['result'];
-            resolve({streetName: result['StreetName'], city: result['City'], state: result['Region'], zip: result['PostalCode']});
-        });
-    });
-};
 
 const validateOrder = async (order) => {
     return new Promise((resolve, reject) => {
