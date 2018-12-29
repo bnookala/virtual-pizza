@@ -17,8 +17,19 @@ const customer = new pizzapi.Customer(
     }
 );
 
+var storeInfo = {};
+myStore.getInfo((result) => {
+    if(result['success']) {
+        storeInfo = result['result'];
+    }
+})
+
 export async function getStoreAddress() {
-    return await getAddress(myStore);
+    return await getAddress(storeInfo);
+}
+
+export async function getStoreHours() {
+    return await getHours(storeInfo);
 }
 
 export async function orderPizzaForRia () {
@@ -44,12 +55,15 @@ export async function orderPizzaForRia () {
     return await validateOrder(order);
 }
 
-const getAddress = async (store) => {
+const getAddress = async (storeInfo) => {
     return new Promise((resolve, reject) => {
-        store.getInfo((result) => {
-            result = result['result'];
-            resolve({streetName: result['StreetName'], city: result['City'], state: result['Region'], zip: result['PostalCode']});
-        });
+        resolve({streetName: storeInfo['StreetName'], city: storeInfo['City'], state: storeInfo['Region'], zip: storeInfo['PostalCode']});
+    });
+};
+
+const getHours = async (storeInfo) => {
+    return new Promise((resolve, reject) => {
+        resolve({hours: storeInfo['HoursDescription']});
     });
 };
 

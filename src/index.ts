@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as dominos from 'dominos';
-import { orderPizzaForRia, getStoreAddress } from './order';
+import { orderPizzaForRia, getStoreAddress, getStoreHours } from './order';
 
 const app = express();
 
@@ -13,8 +13,9 @@ app.get('/nodeAddresses', async (req, res) => {
     res.send(storeAddress);
 });
 
-app.get('/nodeConditions', (req, res) => {
-    res.send('node conditions');
+app.get('/nodeConditions', async (req, res) => {
+    const storeHours = await getStoreHours();
+    res.send(storeHours);
 });
 
 app.get('/getPods', (req, res) => {
