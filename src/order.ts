@@ -1,8 +1,6 @@
 const pizzapi = require('dominos');
-const myStore = new pizzapi.Store({
-    ID: "7172"
-});
-const customer = new pizzapi.Customer(
+
+/* const customer = new pizzapi.Customer(
     {
         firstName: 'Ria',
         lastName: 'Bhatia',
@@ -15,24 +13,54 @@ const customer = new pizzapi.Customer(
         email: 'mycoolemail@gmail.com',
         phone: '4258828080'
     }
-);
+); */
 
-var storeInfo = {};
-myStore.getInfo((result) => {
-    if(result['success']) {
-        storeInfo = result['result'];
+class Store {
+    private storeInfo;
+    private storeId;
+    private _storeObject;
+
+    constructor(storeId: number) {
+        this.storeInfo = {};
+        this.storeId = storeId;
+        this._storeObject = new pizzapi.Store({
+            // 7172 for somewhere in seattle
+            ID: this.storeId
+        });
+
+        this.initProperties();
+    };
+
+    initProperties = async () => {
+        this.storeInfo = await this.getStoreInfo();
+    };
+
+    getStoreInfo = async () => {
+        return new Promise((resolve, reject) => {
+            this._storeObject.getInfo((result) => {
+                if (result['success']) {
+                    console.log(result);
+                    resolve(result['result']);
+                }
+            });
+        });
+    };
+
+    getAddress = () => {
+        const storeInfo = this.storeInfo;
+        return { streetName: storeInfo['StreetName'], city: storeInfo['City'], state: storeInfo['Region'], zip: storeInfo['PostalCode'] }
     }
-})
 
-export async function getStoreAddress() {
-    return await getAddress(storeInfo);
+    getHours = () => {
+        const storeInfo = this.storeInfo;
+        return { hours: storeInfo['HoursDescription'] };
+    }
 }
 
-export async function getStoreHours() {
-    return await getHours(storeInfo);
-}
+let myStore = new Store(7172);
+debugger;
 
-export async function orderPizzaForRia () {
+/* export async function orderPizzaForRia() {
     const order = new pizzapi.Order(
         {
             customer: customer,
@@ -55,18 +83,6 @@ export async function orderPizzaForRia () {
     return await validateOrder(order);
 }
 
-const getAddress = async (storeInfo) => {
-    return new Promise((resolve, reject) => {
-        resolve({streetName: storeInfo['StreetName'], city: storeInfo['City'], state: storeInfo['Region'], zip: storeInfo['PostalCode']});
-    });
-};
-
-const getHours = async (storeInfo) => {
-    return new Promise((resolve, reject) => {
-        resolve({hours: storeInfo['HoursDescription']});
-    });
-};
-
 const validateOrder = async (order) => {
     return new Promise((resolve, reject) => {
         order.validate((result) => {
@@ -74,4 +90,4 @@ const validateOrder = async (order) => {
             resolve(result);
         });
     });
-};
+}; */
